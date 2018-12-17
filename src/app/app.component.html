@@ -1,10 +1,14 @@
+<!--
 <form>
   <div>
     <label for="title">Title: </label>
-    <input type="text" name="title" id="title" [(ngModel)]="appModel.title"> <!--kétirányú binding, tudunk értékre hivatkozni-->
+    <input [disabled]="appModel.checked" type="text" name="title" id="title" [(ngModel)]="appModel.title"> 
+    <p> {{ appModel.title }}</p>
     <label for="">Checked: </label>
     <input type="checkbox" name="checked" id="checked" [(ngModel)]="appModel.checked">
+    <p> {{ appModel.checked }}</p>
     <label for="categories">Category: </label>
+    <p> {{ appModel.category }}</p>
     <select name="categories" id="categories" [(ngModel)]="appModel.category" (change)="changeChecked($event)">
       <option value="Kaja">Kaja</option>
       <option value="Pia">Pia</option>
@@ -12,6 +16,32 @@
     </select>
     <label for="text">Text: </label>
     <input type="text" name="text" id="text" [(ngModel)]="appModel.text">
+    <p> {{ appModel.text }}</p>
   </div>
   <button (click)="showAppModelValue()">Show me what you got!</button>
+</form> 
+
+[ngStyle]="{'background-color': ratePassword(password)}"
+-->
+
+
+<form>
+  <div>
+    <label for="name">Name: </label>
+    <input name="name" id="name" [(ngModel)]="name">
+    <p></p>
+    <p *ngIf="name && !isValidName(name)">Nagy betűvel kezdd a neved!</p>
+
+    <label for="email">E-mail: </label>
+    <input type="text" name="email" id="email" [(ngModel)]="email">
+    <p></p>
+    <p *ngIf="email && !isValidEmail(email)">Érvényes e-mail formátumot adj meg! (valami@valami.com)</p>
+
+    <label for="password">Password: </label>
+    <input for="password" type="text" name="password" id="password" [(ngModel)]="password" [ngStyle]="{'background-color': ratePassword(password)}">
+
+    <button [disabled]="!isValidEmail(email) || !isValidName(name) || !isValidPassword(password)">Küldés</button>
+  </div>
+
+
 </form>
