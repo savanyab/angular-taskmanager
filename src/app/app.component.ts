@@ -26,19 +26,18 @@ export class AppComponent {
   }
   
   ratePassword(password) {    
-    const weakFormat = /[a-z0-9]{1,7}/;
-    const mediumFormat = /[a-zA-Z0-9]{8,13}/;
-    const strongFormat = /[a-zA-Z0-9$@&#]{14,}/;
-    if (weakFormat.test(password)) {
+    const weakFormat = /[a-z0-9]/;
+    const mediumFormat = /[a-zA-Z0-9]/;
+    const strongFormat = /[a-zA-Z0-9$@&#]/;
+    if (this.password.length < 8 && weakFormat.test(password)) {
       return 'red';
-    } else if (mediumFormat.test(password)) {
+    } else if (this.password.length < 14 && mediumFormat.test(password)) {
       return 'orange';
-    } else if (strongFormat.test(password)) {
+    } else if (this.password.length >= 14 && strongFormat.test(password)) {
       return 'green';
-    };
+    }
     
   }
-
 
   isValidPassword(password) {
     return this.ratePassword(password) === 'green';
