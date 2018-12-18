@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AppModel, AppInterface } from './app.model';
+import { SignUpModel } from './sign-up.model';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,7 @@ import { AppModel, AppInterface } from './app.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  public taskModel = new AppModel();
   public appModel = new AppModel();
 
   public appImpl: AppInterface = <AppInterface>{};
@@ -14,7 +16,53 @@ export class AppComponent {
   name: string = '';
   email: string = '';
   password: string = '';
+  public fullnameInvalid = true;
+  public emailInvalid = true;
+  
 
+  public signUp() {
+
+  }
+
+  public validateFullname(event: any) {
+    if(!event.target.value) {
+      this.fullnameInvalid = true;
+      return;
+    }
+    const fullname = event.target.value;
+    this.fullnameInvalid = !(fullname.charAt(0) === fullname.charAt(0).toUpperCase());
+    
+  }
+
+  public validateEmail(event: any) {
+    if(!event.target.value) {
+      this.emailInvalid = true;
+      return;
+    }
+    const email: string = event.target.value;
+    this.emailInvalid = !email.match(/[a-zA-Z0-9]+@[a-zA-Z0-9]+\.com$/);
+  }
+
+  public signUpModel: SignUpModel = new SignUpModel();
+
+
+  constructor() {
+
+  }
+
+  public showAppModelValue() { // ha nem írom ki hogy public, a default akkor is az
+    console.log(this.appModel);
+  }
+
+  changeChecked(isChecked: boolean) {
+    this.appModel.checked = !!isChecked; // dupla negálás -- így nem fog undefinedot adni
+    /*if (isChecked) {
+      this.appModel.checked = true
+    } else {
+      this.appModel.checked = false;
+    }*/
+  }
+  /*
   isValidName(name) {
     const format = /^[A-Z]/;
     return format.test(name);
@@ -42,24 +90,7 @@ export class AppComponent {
   isValidPassword(password) {
     return this.ratePassword(password) === 'green';
   }
-
-
-  constructor() {
-
-  }
-
-  public showAppModelValue() { // ha nem írom ki hogy public, a default akkor is az
-    console.log(this.appModel);
-  }
-
-  changeChecked(isChecked: boolean) {
-    this.appModel.checked = !!isChecked; // dupla negálás -- így nem fog undefinedot adni
-    /*if (isChecked) {
-      this.appModel.checked = true
-    } else {
-      this.appModel.checked = false;
-    }*/
-  }
+  */
 
 
 

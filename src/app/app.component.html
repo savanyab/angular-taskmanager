@@ -24,23 +24,45 @@
 [ngStyle]="{'background-color': ratePassword(password)}"
 -->
 
-
+<!--
 <form>
+  <h2>Sign Up</h2>
   <div>
     <label for="name">Name: </label>
     <input name="name" id="name" [(ngModel)]="name">
-    <p></p>
     <p *ngIf="name && !isValidName(name)">Nagy betűvel kezdd a neved!</p>
-
+    <br>
     <label for="email">E-mail: </label>
     <input type="text" name="email" id="email" [(ngModel)]="email">
-    <p></p>
+    <br>
     <p *ngIf="email && !isValidEmail(email)">Érvényes e-mail formátumot adj meg! (valami@valami.com)</p>
 
     <label for="password">Password: </label>
     <input for="password" type="text" name="password" id="password" [(ngModel)]="password" [ngStyle]="{'background-color': ratePassword(password)}">
 
-    <button [disabled]="!isValidEmail(email) || !isValidName(name) || !isValidPassword(password)">Küldés</button>
+    <button [disabled]="!isValidEmail(email) || !isValidName(name) || !isValidPassword(password)" (click)="signUp()">Küldés</button>
+  </div>
+
+
+</form>
+-->
+
+<app-create-edit-task [model]="taskModel"></app-create-edit-task>
+<form>
+<h2>Sign Up</h2>
+  <div>
+    <label for="name">Fullname: </label>
+    <input name="fullname" id="fullname" [(ngModel)]="signUpModel.fullname" (blur)="validateFullname($event)">
+    <p *ngIf="fullnameInvalid" style="color: red">Full name must start with uppercase!</p>
+
+    <label for="email">E-mail: </label>
+    <input type="text" name="email" id="email" [(ngModel)]="signUpModel.email" (change)="validateEmail($event)">
+    <p *ngIf="emailInvalid" style="color: red">Invalid email</p>
+
+    <label for="password">Password: </label>
+    <input for="password" type="text" name="password" id="password" [(ngModel)]="signUpModel.password">
+
+    <button (click)="signUp()">Küldés</button>
   </div>
 
 
