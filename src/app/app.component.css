@@ -1,7 +1,10 @@
-.colored {
-    background-color: lightblue;
+.RED {
+    background: red;
+}
+.ORANGE {
+    background: orange;
 }
 
-.weak {
-    background-color: red;
+.GREEN {
+    background: greenyellow;
 }

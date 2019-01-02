@@ -10,15 +10,17 @@ import { SignUpModel } from './sign-up.model';
 export class AppComponent {
   public taskModel = new AppModel();
   public appModel = new AppModel();
+  public signUpModel: SignUpModel = new SignUpModel();
 
   public appImpl: AppInterface = <AppInterface>{};
 
   name: string = '';
   email: string = '';
   password: string = '';
-  public fullnameInvalid = true;
-  public emailInvalid = true;
-  
+  public fullnameInvalid = false;
+  public emailInvalid = false;
+  public passwordInvalid: 'RED' | 'ORANGE' | 'GREEN' = 'RED';
+
 
   public signUp() {
 
@@ -40,18 +42,37 @@ export class AppComponent {
       return;
     }
     const email: string = event.target.value;
-    this.emailInvalid = !email.match(/[a-zA-Z0-9]+@[a-zA-Z0-9]+\.com$/);
+    this.emailInvalid = !email.match(/[a-zA-Z0-9]+\@[a-zA-Z0-9]+\.com$/g);
   }
 
-  public signUpModel: SignUpModel = new SignUpModel();
+  public validatePassword(event: any) {
+    if (!event.target.value) {
+      this.passwordInvalid = 'RED';
+      return;
+    }
+    const password: string = event.target.value;
+    if (password.match(/[a-z]/g) &&
+      password.match(/[0-9]/g) && password.length < 8) {
+      this.passwordInvalid = 'RED';
+    } else if (password.match(/[a-z]/g) &&
+      password.match(/[A-Z]/g) &&
+      password.match(/[0-9]/g) &&
+      (password.length >= 8 && password.length < 14)) {
+      this.passwordInvalid = 'ORANGE';
+    } else if (password.match(/[a-z]/g) &&
+      password.match(/[0-9]/g) && password.match(/[A-Z]/g) &&
+      password.match(/(\:|\.|\@|\!)/g) && password.length >= 14) {
+      this.passwordInvalid = 'GREEN';
+    }
+  }
 
 
   constructor() {
 
   }
 
-  public showAppModelValue() { // ha nem írom ki hogy public, a default akkor is az
-    console.log(this.appModel);
+  public showAppModelValue(event: AppModel) { 
+    console.log(event);
   }
 
   changeChecked(isChecked: boolean) {
@@ -62,36 +83,17 @@ export class AppComponent {
       this.appModel.checked = false;
     }*/
   }
-  /*
-  isValidName(name) {
-    const format = /^[A-Z]/;
-    return format.test(name);
-  }
 
-  isValidEmail(email) {
-    const format = /[a-zA-Z0-9\.-_]+@[a-zA-Z0-9]+\.com$/;
-    return format.test(email);
+  public getColor(checked: boolean): string {
+    return checked ? 'green' : 'red';
   }
-  
-  ratePassword(password) {    
-    const weakFormat = /[a-z0-9]/;
-    const mediumFormat = /[a-zA-Z0-9]/;
-    const strongFormat = /[a-zA-Z0-9$@&#]/;
-    if (this.password.length < 8 && weakFormat.test(password)) {
-      return 'red';
-    } else if (this.password.length < 14 && mediumFormat.test(password)) {
-      return 'orange';
-    } else if (this.password.length >= 14 && strongFormat.test(password)) {
-      return 'green';
-    }
-    
-  }
-
-  isValidPassword(password) {
-    return this.ratePassword(password) === 'green';
-  }
-  */
-
 
 
 }
+
+
+  
+
+  
+
+  

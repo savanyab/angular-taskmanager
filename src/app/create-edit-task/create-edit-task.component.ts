@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import {AppModel} from '../app.model';
 
 @Component({
@@ -7,7 +7,9 @@ import {AppModel} from '../app.model';
   styleUrls: ['./create-edit-task.component.css']
 })
 export class CreateEditTaskComponent implements OnInit {
-  @Input('model') appModel;
+  @Input('model') appModel: AppModel;
+
+  @Output('show') showModelValue = new EventEmitter();
 
   constructor() { }
 
@@ -15,7 +17,7 @@ export class CreateEditTaskComponent implements OnInit {
   }
 
   public showAppModelValue() {
-    console.log(this.appModel);
+    this.showModelValue.emit(this.appModel);
   }
 
 }
